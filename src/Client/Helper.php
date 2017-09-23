@@ -19,6 +19,9 @@ use Payment\HelperContext;
 class Helper
 {
     private static $supportChannel = [
+        // 微信
+        Config::WX_OPENID,// 微信获取openid
+        // 招行一网通
         Config::CMB_BIND,// 招商绑卡操作
         Config::CMB_PUB_KEY,// 招商公钥查询操作
     ];

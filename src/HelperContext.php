@@ -1,10 +1,12 @@
 <?php
+
 namespace Payment;
 
 use Payment\Common\BaseStrategy;
 use Payment\Common\PayException;
 use Payment\Helper\Cmb\BindCardHelper;
 use Payment\Helper\Cmb\PubKeyHelper;
+use Payment\Helper\Wx\OpenIdHelper;
 
 /**
  * 用于完成一些辅助操作，例如： 招商绑卡  操作
@@ -32,6 +34,9 @@ class HelperContext
     {
         try {
             switch ($way) {
+                case Config::WX_OPENID:
+                    $this->helper = new OpenIdHelper($config);
+                    break;
                 case Config::CMB_BIND:
                     $this->helper = new BindCardHelper($config);
                     break;
@@ -39,7 +44,7 @@ class HelperContext
                     $this->helper = new PubKeyHelper($config);
                     break;
                 default:
-                    throw new PayException('当前仅支持：CMB_BIND CMB_PUB_KEY 操作');
+                    throw new PayException('当前仅支持：CMB_BIND CMB_PUB_KEY WX_OPENID');
             }
         } catch (PayException $e) {
             throw $e;
@@ -57,7 +62,7 @@ class HelperContext
      */
     public function helper(array $data)
     {
-        if (! $this->helper instanceof BaseStrategy) {
+        if (!$this->helper instanceof BaseStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 

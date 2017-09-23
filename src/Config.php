@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment;
 
 /**
@@ -59,7 +60,7 @@ final class Config
 
     const WX_TRANSFER = 'wx_transfer';// 转账
 
-
+    const WX_OPENID = 'wx_openid';// 微信openid获取
 
     //========================= 招商相关接口 =======================//
     // 支付常量
@@ -85,7 +86,7 @@ final class Config
     //======================= 交易状态常量定义 ======================//
     const TRADE_STATUS_SUCC = 'success';// 交易成功
 
-    const TRADE_STATUS_FAILD  = 'not_pay';// 交易未完成
+    const TRADE_STATUS_FAILD = 'not_pay';// 交易未完成
 
 
     //======================= 账户类型 ======================//
