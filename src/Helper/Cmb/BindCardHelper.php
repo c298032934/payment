@@ -1,18 +1,19 @@
 <?php
+
 namespace Payment\Helper\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
 use Payment\Common\Cmb\Data\BindCardData;
 
 /**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/28
- * Time: 下午12:01
+ * 招行绑卡
  */
 class BindCardHelper extends CmbBaseStrategy
 {
-
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->getewayUrl = 'https://mobile.cmbchina.com/mobilehtml/DebitCard/M_NetPay/OneNetRegister/NP_BindCard.aspx';

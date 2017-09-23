@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/28
- * Time: 上午10:48
- */
 
 namespace Payment\Common\Cmb\Data;
-
 
 use Payment\Common\PayException;
 
@@ -22,16 +15,23 @@ use Payment\Common\PayException;
  */
 class BindCardData extends CmbBaseData
 {
-
+    /**
+     * 检查基本数据
+     */
     protected function checkDataParam()
     {
         parent::checkDataParam();
         $agrNo = $this->agr_no;
-        if (empty($agrNo) || mb_strlen($agrNo) > 30 || ! is_numeric($agrNo)) {
+        if (empty($agrNo) || mb_strlen($agrNo) > 30 || !is_numeric($agrNo)) {
             throw new PayException('客户协议号。必须为纯数字串，不超过30位');
         }
     }
 
+    /**
+     * 请求数据
+     *
+     * @return array
+     */
     protected function getReqData()
     {
         $reqData = [

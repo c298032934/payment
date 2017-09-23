@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Cmb\Data\Charge;
 
 use Payment\Common\Cmb\Data\CmbBaseData;
@@ -44,7 +45,7 @@ class ChargeData extends CmbBaseData
         }
 
         $timeExpire = $this->timeout_express;
-        if (! empty($timeExpire)) {
+        if (!empty($timeExpire)) {
             $express = floor(($timeExpire - strtotime($this->dateTime)) / 60);
 
             if ($express > CmbConfig::MAX_EXPIRE_TIME || $express < 0) {// 招商规定
@@ -67,7 +68,7 @@ class ChargeData extends CmbBaseData
             'date' => $this->date ? $this->date : date('Ymd', time()),
             'orderNo' => $this->order_no,
             'amount' => $this->amount,
-            'expireTimeSpan' => $this->timeout_express ? $this->timeout_express  : '',
+            'expireTimeSpan' => $this->timeout_express ? $this->timeout_express : '',
             'payNoticeUrl' => $this->notifyUrl,
             'payNoticePara' => $this->return_param ? $this->return_param : '',
             'returnUrl' => $this->returnUrl ? $this->returnUrl : '',

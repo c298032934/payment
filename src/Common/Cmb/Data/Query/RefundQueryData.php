@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/28
- * Time: 下午5:23
- */
 
 namespace Payment\Common\Cmb\Data\Query;
-
 
 use Payment\Common\Cmb\Data\CmbBaseData;
 use Payment\Common\PayException;
@@ -25,7 +18,9 @@ use Payment\Common\PayException;
  */
 class RefundQueryData extends CmbBaseData
 {
-
+    /**
+     * 检查基本数据
+     */
     protected function checkDataParam()
     {
         parent::checkDataParam();
@@ -39,14 +34,14 @@ class RefundQueryData extends CmbBaseData
             throw new PayException('商户退款日期，格式：yyyyMMdd');
         }
 
-        if (! empty($refundId)) {// 按银行退款流水号查单笔
+        if (!empty($refundId)) {// 按银行退款流水号查单笔
             $this->out_trade_no = '';
             $this->refund_no = '';
             $this->type = 'A';
-        } elseif (! empty($orderNo) && ! empty($refundNo)) {// 按商户订单号+商户退款流水号查单笔
+        } elseif (!empty($orderNo) && !empty($refundNo)) {// 按商户订单号+商户退款流水号查单笔
             $this->refund_id = '';
             $this->type = 'B';
-        } elseif (! empty($orderNo)) {// 按商户订单号查退款
+        } elseif (!empty($orderNo)) {// 按商户订单号查退款
             $this->refund_id = '';
             $this->refund_no = '';
             $this->type = 'C';
@@ -55,6 +50,11 @@ class RefundQueryData extends CmbBaseData
         }
     }
 
+    /**
+     * 请求数据
+     *
+     * @return array
+     */
     protected function getReqData()
     {
         $reqData = [

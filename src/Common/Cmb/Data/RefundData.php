@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/28
- * Time: 下午3:16
- */
 
 namespace Payment\Common\Cmb\Data;
 
@@ -20,13 +14,15 @@ use Payment\Utils\Rc4Encrypt;
  * @property string $out_trade_no 商户系统内部的订单号
  * @property string $refund_no  商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔
  * @property float $refund_fee 退款总金额，订单总金额，只能为整数
- * @property string $reason 	退款的原因说明
+ * @property string $reason    退款的原因说明
  * @property string $operator_id 商户的操作员编号
  *
  */
 class RefundData extends CmbBaseData
 {
-
+    /**
+     * 检查基本数据
+     */
     protected function checkDataParam()
     {
         parent::checkDataParam();
@@ -49,7 +45,7 @@ class RefundData extends CmbBaseData
             throw new PayException('退款流水号,商户生成，不能超过20位');
         }
 
-        if (empty($refundFee) || ! is_numeric($refundFee)) {
+        if (empty($refundFee) || !is_numeric($refundFee)) {
             throw new PayException('退款金额,格式xxxx.xx');
         }
 
@@ -58,6 +54,11 @@ class RefundData extends CmbBaseData
         }
     }
 
+    /**
+     * 请求数据
+     *
+     * @return array
+     */
     protected function getReqData()
     {
         $rc4 = new Rc4Encrypt($this->merKey);

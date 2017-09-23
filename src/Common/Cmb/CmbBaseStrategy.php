@@ -9,10 +9,7 @@ use Payment\Common\PayException;
 use Payment\Config;
 
 /**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/27
- * Time: 下午12:36
+ * 招行接口的基类
  */
 abstract class CmbBaseStrategy implements BaseStrategy
 {
@@ -66,7 +63,7 @@ abstract class CmbBaseStrategy implements BaseStrategy
     }
 
     /**
-     * 处理微信的返回值并返回给客户端
+     * 处理招行的返回值并返回给客户端
      * @param array $ret
      * @return mixed
      * @author helei
@@ -75,11 +72,7 @@ abstract class CmbBaseStrategy implements BaseStrategy
     {
         $json = json_encode($ret, JSON_UNESCAPED_UNICODE);
 
-        $reqData = [
-            'url' => $this->config->getewayUrl,
-            'name' => CmbConfig::REQ_FILED_NAME,
-            'value' => $json,
-        ];
+        $reqData = ['url' => $this->config->getewayUrl, 'name' => CmbConfig::REQ_FILED_NAME, 'value' => $json];
         return $reqData;
     }
 
@@ -92,14 +85,9 @@ abstract class CmbBaseStrategy implements BaseStrategy
      */
     protected function sendReq($json)
     {
-        $client = new Client([
-            'timeout' => '10.0'
-        ]);
+        $client = new Client(['timeout' => '10.0']);
         // @note: 微信部分接口并不需要证书支持。这里为了统一，全部携带证书进行请求
-        $options = [
-            'body' => $json,
-            'http_errors' => false
-        ];
+        $options = ['body' => $json, 'http_errors' => false];
         $response = $client->request('POST', $this->config->getewayUrl, $options);
         if ($response->getStatusCode() != '200') {
             throw new PayException('网络发生错误，请稍后再试curl返回码：' . $response->getReasonPhrase());

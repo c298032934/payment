@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
@@ -16,7 +17,10 @@ use Payment\Common\Cmb\Data\Charge\ChargeData;
  */
 class CmbCharge extends CmbBaseStrategy
 {
-
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->getewayUrl = 'https://netpay.cmbchina.com/netpayment/BaseHttp.dll?MB_EUserPay';

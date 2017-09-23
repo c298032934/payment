@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Cmb\Data\Query;
 
 use Payment\Common\Cmb\Data\CmbBaseData;
@@ -19,7 +20,9 @@ use Payment\Common\PayException;
  */
 class ChargeQueryData extends CmbBaseData
 {
-
+    /**
+     * 检查基本数据
+     */
     protected function checkDataParam()
     {
         parent::checkDataParam();
@@ -41,6 +44,11 @@ class ChargeQueryData extends CmbBaseData
         }
     }
 
+    /**
+     * 请求数据
+     *
+     * @return array
+     */
     protected function getReqData()
     {
         $reqData = [

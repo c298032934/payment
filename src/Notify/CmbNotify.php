@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Notify;
 
 use Payment\Common\Cmb\CmbConfig;
@@ -19,7 +20,7 @@ class CmbNotify extends NotifyStrategy
 {
 
     /**
-     * CmbNotify constructor.
+     * 构造方法
      * @param array $config
      * @throws PayException
      */
@@ -32,10 +33,17 @@ class CmbNotify extends NotifyStrategy
         }
     }
 
+    /**
+     * 获取移除通知的数据  并进行简单处理（如：格式化为数组）
+     *
+     * 如果获取数据失败，返回false
+     *
+     * @return array|false
+     */
     public function getNotifyData()
     {
         $data = empty($_POST) ? $_GET : $_POST;
-        if (empty($data) || ! is_array($data)) {
+        if (empty($data) || !is_array($data)) {
             return false;
         }
 
@@ -89,13 +97,13 @@ class CmbNotify extends NotifyStrategy
             return $data;
         } elseif ($noticeType === CmbConfig::NOTICE_PAY) {
             $retData = [
-                'amount'   => $noticeData['amount'],
-                'channel'   => $channel,
+                'amount' => $noticeData['amount'],
+                'channel' => $channel,
                 'date' => $noticeData['date'],
-                'order_no'   => $noticeData['orderNo'],
-                'trade_state'   => Config::TRADE_STATUS_SUCC,// 招商的订单只会成功
-                'transaction_id'   => $noticeData['bankSerialNo'],
-                'time_end'   => date('Y-m-d H:i:s', strtotime($noticeData['dateTime'])),// Y-m-d H:i:s
+                'order_no' => $noticeData['orderNo'],
+                'trade_state' => Config::TRADE_STATUS_SUCC,// 招商的订单只会成功
+                'transaction_id' => $noticeData['bankSerialNo'],
+                'time_end' => date('Y-m-d H:i:s', strtotime($noticeData['dateTime'])),// Y-m-d H:i:s
                 'discount_fee' => $noticeData['discountAmount'],// 优惠金额,格式：xxxx.xx  无优惠时返回0.00
                 'card_type' => $noticeData['cardType'],// 卡类型,02：一卡通；03：信用卡；07：他行卡
                 'return_param' => $noticeData['merchantPara'],
@@ -112,7 +120,7 @@ class CmbNotify extends NotifyStrategy
                 'return_param' => $noticeData['noticePara'],
                 'user_pid_hash' => $noticeData['userPidHash'],
                 'user_pid_type' => $noticeData['userPidType'],
-                'channel'   => $channel,
+                'channel' => $channel,
             ];
         } else {
             $retData = $noticeData;

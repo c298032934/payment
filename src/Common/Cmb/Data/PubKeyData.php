@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/29
- * Time: 上午9:52
- */
 
 namespace Payment\Common\Cmb\Data;
 
@@ -18,6 +12,11 @@ use Payment\Common\Cmb\CmbConfig;
 class PubKeyData extends CmbBaseData
 {
 
+    /**
+     * 请求数据
+     *
+     * @return array
+     */
     protected function getReqData()
     {
         $reqData = [

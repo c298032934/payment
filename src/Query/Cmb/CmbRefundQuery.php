@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/4/28
- * Time: 下午5:22
- */
 
 namespace Payment\Query\Cmb;
 
@@ -13,9 +7,16 @@ use Payment\Common\Cmb\Data\Query\RefundQueryData;
 use Payment\Common\Cmb\CmbConfig;
 use Payment\Config;
 
+/**
+ * 招行退款订单查询
+ */
 class CmbRefundQuery extends CmbBaseStrategy
 {
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->getewayUrl = 'https://payment.ebank.cmbchina.com/NetPayment/BaseHttp.dll?QuerySettledRefund';
@@ -26,6 +27,11 @@ class CmbRefundQuery extends CmbBaseStrategy
         return RefundQueryData::class;
     }
 
+    /**
+     * 处理招行的返回值并返回给客户端
+     * @param array $ret
+     * @return mixed
+     */
     protected function retData(array $ret)
     {
         $json = json_encode($ret, JSON_UNESCAPED_UNICODE);
@@ -52,13 +58,7 @@ class CmbRefundQuery extends CmbBaseStrategy
         }
 
         // 正确情况
-        $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'channel' => Config::CMB_REFUND,
-                'refund_data' => $list,
-            ],
-        ];
+        $retData = ['is_success' => 'T', 'response' => ['channel' => Config::CMB_REFUND, 'refund_data' => $list]];
 
         return $retData;
     }

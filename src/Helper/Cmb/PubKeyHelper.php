@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Helper\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
@@ -13,7 +14,10 @@ use Payment\Config;
  */
 class PubKeyHelper extends CmbBaseStrategy
 {
-
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->getewayUrl = 'https://b2b.cmbchina.com/CmbBank_B2B/UI/NetPay/DoBusiness.ashx';
@@ -24,6 +28,11 @@ class PubKeyHelper extends CmbBaseStrategy
         return PubKeyData::class;
     }
 
+    /**
+     * 处理招行的返回值并返回给客户端
+     * @param array $ret
+     * @return mixed
+     */
     protected function retData(array $ret)
     {
         $json = json_encode($ret, JSON_UNESCAPED_UNICODE);
@@ -38,11 +47,11 @@ class PubKeyHelper extends CmbBaseStrategy
 
         // 正确情况
         $rData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'pub_key'   => $retData['fbPubKey'],
-                'channel'   => Config::CMB_PUB_KEY,
-                'time'   => date('Y-m-d H:i:s', strtotime($retData['dateTime'])),// Y-m-d H:i:s,
+            'is_success' => 'T',
+            'response' => [
+                'pub_key' => $retData['fbPubKey'],
+                'channel' => Config::CMB_PUB_KEY,
+                'time' => date('Y-m-d H:i:s', strtotime($retData['dateTime'])),// Y-m-d H:i:s,
             ],
         ];
 
