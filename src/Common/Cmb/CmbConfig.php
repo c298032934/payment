@@ -140,8 +140,7 @@ class CmbConfig extends ConfigInterface
             $this->useSandbox = false;// 不是沙箱模式
         }
 
-        if (key_exists('cmb_pub_key',
-                $config) && (file_exists($config['cmb_pub_key']) || !empty($config['cmb_pub_key']))) {
+        if (key_exists('cmb_pub_key', $config) && (file_exists($config['cmb_pub_key']) || !empty($config['cmb_pub_key']))) {
             $this->rsaPubKey = StrUtil::getRsaKeyValue($config['cmb_pub_key'], 'public');
         } else {
             throw new PayException('请提供招商对应的rsa公钥，可通过Helper接口获取');
