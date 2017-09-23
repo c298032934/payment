@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Wx;
 
 use Payment\Common\Weixin\Data\BackPubChargeData;
@@ -14,6 +15,10 @@ use Payment\Common\Weixin\WxBaseStrategy;
  */
 class WxPubCharge extends WxBaseStrategy
 {
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->tradeType = 'JSAPI';
@@ -24,18 +29,8 @@ class WxPubCharge extends WxBaseStrategy
      * 处理公众号支付的返回值。直接返回与微信文档对应的字段
      * @param array $ret
      *
-     * @return string $data  包含以下键
+     * @return array $data  包含以下键
      *
-     * ```php
-     * $data = [
-     *  'appId' => '',   // 公众号id
-     *  'package'   => '',  // 订单详情扩展字符串  统一下单接口返回的prepay_id参数值，提交格式如：prepay_id=***
-     *  'nonceStr'  => '',   // 随机字符串
-     *  'timeStamp' => '',   // 时间戳
-     *  'signType'  => '',   // 签名算法，暂支持MD5
-     *  'paySign'  => '',  // 签名
-     * ];
-     * ```
      * @author helei
      */
     protected function retData(array $ret)

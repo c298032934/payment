@@ -1,11 +1,11 @@
 <?php
+
 namespace Payment\Common\Weixin;
 
 use GuzzleHttp\Client;
 use Payment\Common\PayException;
 use Payment\Common\Weixin\Data\WxBaseData;
 use Payment\Utils\DataParser;
-use Payment\Utils\StrUtil;
 
 /**
  * 微信支付沙盒测试
@@ -28,15 +28,8 @@ class WechatHelper extends WxBaseData
 
         $xml = DataParser::toXml($this->getData());
 
-        $url = self::SANDBOX_URL;
-
-        $client = new Client([
-            'timeout' => '10.0'
-        ]);
-        $options = [
-            'body' => $xml,
-            'http_errors' => false
-        ];
+        $client = new Client(['timeout' => '10.0']);
+        $options = ['body' => $xml, 'http_errors' => false];
 
         $response = $client->request('POST', self::SANDBOX_URL, $options);
 
@@ -57,14 +50,14 @@ class WechatHelper extends WxBaseData
      */
     protected function buildData()
     {
-        $this->retData = [
-            'mch_id'    => $this->mchId,
-            'nonce_str' => StrUtil::getNonceStr(),
-        ];
+        $this->retData = ['mch_id' => $this->mchId, 'nonce_str' => $this->nonceStr];
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
-        // TODO: Implement checkDataParam() method.
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Weixin\Data\Charge;
 
 use Payment\Common\PayException;
@@ -26,7 +27,6 @@ use Payment\Config;
  */
 abstract class ChargeBaseData extends WxBaseData
 {
-
     /**
      * 检查传入的支付信息是否正确
      */
@@ -37,6 +37,7 @@ abstract class ChargeBaseData extends WxBaseData
         $subject = $this->subject;
         $body = $this->body;
         $deviceInfo = $this->terminal_id;
+        $notifyUrl = $this->notifyUrl;
 
         // 检查订单号是否合法
         if (empty($orderNo) || mb_strlen($orderNo) > 64) {
@@ -72,6 +73,11 @@ abstract class ChargeBaseData extends WxBaseData
         // 设置设备号
         if (empty($deviceInfo)) {
             $this->terminal_id = 'WEB';
+        }
+
+        // 检查回调地址
+        if (empty($notifyUrl)) {
+            throw new PayException('异步通知的url必须提供.');
         }
     }
 }

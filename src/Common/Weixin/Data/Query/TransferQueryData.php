@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/3/7
- * Time: 下午4:55
- */
 
 namespace Payment\Common\Weixin\Data\Query;
-
 
 use Payment\Common\PayException;
 use Payment\Common\Weixin\Data\WxBaseData;
@@ -23,21 +16,27 @@ use Payment\Utils\ArrayUtil;
  */
 class TransferQueryData extends WxBaseData
 {
-
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $this->retData = [
             'appid' => $this->appId,
-            'mch_id'    => $this->mchId,
+            'mch_id' => $this->mchId,
             'nonce_str' => $this->nonceStr,
             //'sign_type' => $this->signType,// 转账查询，不能加入该数据
 
-            'partner_trade_no'    => $this->trans_no,
+            'partner_trade_no' => $this->trans_no,
         ];
 
         $this->retData = ArrayUtil::paraFilter($this->retData);
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
         $transNo = $this->trans_no;

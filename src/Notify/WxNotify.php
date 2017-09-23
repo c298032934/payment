@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Notify;
 
 use Payment\Common\PayException;
@@ -20,7 +21,7 @@ class WxNotify extends NotifyStrategy
 {
 
     /**
-     * WxNotify constructor.
+     * 构造方法
      * @param array $config
      * @throws PayException
      */
@@ -129,18 +130,18 @@ class WxNotify extends NotifyStrategy
             'device_info' => $data['device_info'],
             'fee_type' => $data['fee_type'],
             'is_subscribe' => $data['is_subscribe'],
-            'buyer_id'   => $data['openid'],
-            'order_no'   => $data['out_trade_no'],
-            'pay_time'   => date('Y-m-d H:i:s', strtotime($data['time_end'])),// 支付完成时间
-            'amount'   => $totalFee,
+            'buyer_id' => $data['openid'],
+            'order_no' => $data['out_trade_no'],
+            'pay_time' => date('Y-m-d H:i:s', strtotime($data['time_end'])),// 支付完成时间
+            'amount' => $totalFee,
             'trade_type' => $data['trade_type'],
-            'transaction_id'   => $data['transaction_id'],
-            'trade_state'   => strtolower($data['return_code']),
-            'channel'   => Config::WX_CHARGE,
+            'transaction_id' => $data['transaction_id'],
+            'trade_state' => strtolower($data['return_code']),
+            'channel' => Config::WX_CHARGE,
         ];
 
         // 检查是否存在用户自定义参数
-        if (isset($data['attach']) && ! empty($data['attach'])) {
+        if (isset($data['attach']) && !empty($data['attach'])) {
             $retData['return_param'] = $data['attach'];
         }
 
@@ -156,17 +157,12 @@ class WxNotify extends NotifyStrategy
      */
     protected function replyNotify($flag, $msg = 'OK')
     {
-        // 默认为成功
-        $result = [
-            'return_code'   => 'SUCCESS',
-            'return_msg'    => 'OK',
-        ];
-        if (! $flag) {
+        if ($flag) {
+            // 成功
+            $result = ['return_code' => 'SUCCESS', 'return_msg' => 'OK'];
+        } else {
             // 失败
-            $result = [
-                'return_code'   => 'FAIL',
-                'return_msg'    => $msg,
-            ];
+            $result = ['return_code' => 'FAIL', 'return_msg' => $msg];
         }
 
         return DataParser::toXml($result);

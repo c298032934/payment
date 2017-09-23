@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Wx;
 
 use Payment\Common\Weixin\Data\BackAppChargeData;
@@ -14,6 +15,10 @@ use Payment\Common\Weixin\WxBaseStrategy;
  */
 class WxAppCharge extends WxBaseStrategy
 {
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->tradeType = 'APP';
@@ -23,20 +28,7 @@ class WxAppCharge extends WxBaseStrategy
     /**
      * 处理APP支付的返回值。直接返回与微信文档对应的字段
      * @param array $ret
-     *
      * @return array $data
-     *
-     * ```php
-     * $data = [
-     *  'appid' => '',   // 应用ID
-     *  'partnerid' => '',   // 商户号
-     *  'prepayid'  => '',   // 预支付交易会话ID
-     *  'package'   => '',  // 扩展字段  固定值：Sign=WXPay
-     *  'noncestr'  => '',   // 随机字符串
-     *  'timestamp' => '',   // 时间戳
-     *  'sign'  => '',  // 签名
-     * ];
-     * ```
      * @author helei
      */
     protected function retData(array $ret)

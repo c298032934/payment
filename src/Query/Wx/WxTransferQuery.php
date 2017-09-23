@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Query\Wx;
 
 use Payment\Common\PayException;
@@ -16,6 +17,10 @@ class WxTransferQuery extends WxBaseStrategy
 {
     protected $reqUrl = 'https://api.mch.weixin.qq.com/{debug}/mmpaymkttransfers/gettransferinfo';
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         return TransferQueryData::class;
@@ -36,20 +41,12 @@ class WxTransferQuery extends WxBaseStrategy
 
         // 请求失败，可能是网络
         if ($data['return_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $data['return_msg'],
-                'channel' => Config::WX_TRANSFER,
-            ];
+            return ['is_success' => 'F', 'error' => $data['return_msg'], 'channel' => Config::WX_TRANSFER];
         }
 
         // 业务失败
         if ($data['result_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $data['err_code_des'],
-                'channel' => Config::WX_TRANSFER,
-            ];
+            return ['is_success' => 'F', 'error' => $data['err_code_des'], 'channel' => Config::WX_TRANSFER];
         }
 
         // 正确
@@ -68,17 +65,17 @@ class WxTransferQuery extends WxBaseStrategy
         $amount = bcdiv($data['payment_amount'], 100, 2);
 
         $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'trans_no'   => $data['partner_trade_no'],// 商户单号
-                'transaction_id'  => $data['detail_id'],// 付款单号
-                'status'  => strtolower($data['status']),// 转账状态
-                'reason'    => $data['reason'],// 失败原因
-                'openid'   => $data['openid'],
-                'payee_name'   => $data['transfer_name'],// 收款用户姓名
-                'amount'   => $amount,
-                'pay_date'   => $data['transfer_time'],
-                'desc'   => $data['desc'],// 付款描述
+            'is_success' => 'T',
+            'response' => [
+                'trans_no' => $data['partner_trade_no'],// 商户单号
+                'transaction_id' => $data['detail_id'],// 付款单号
+                'status' => strtolower($data['status']),// 转账状态
+                'reason' => $data['reason'],// 失败原因
+                'openid' => $data['openid'],
+                'payee_name' => $data['transfer_name'],// 收款用户姓名
+                'amount' => $amount,
+                'pay_date' => $data['transfer_time'],
+                'desc' => $data['desc'],// 付款描述
                 'channel' => Config::WX_TRANSFER,
             ],
         ];

@@ -1,9 +1,4 @@
 <?php
-/**
- * @author: helei
- * @createTime: 2016-08-04 09:42
- * @description:
- */
 
 namespace Payment\Common\Weixin\Data;
 
@@ -32,23 +27,26 @@ use Payment\Utils\ArrayUtil;
  */
 class TransferData extends WxBaseData
 {
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $this->retData = [
             'mch_appid' => $this->appId,
-            'mchid'    => $this->mchId,
+            'mchid' => $this->mchId,
             'device_info' => $this->terminal_id,
             'nonce_str' => $this->nonceStr,
-            'partner_trade_no'    => $this->trans_no,
-            'openid'    => $this->openid,
+            'partner_trade_no' => $this->trans_no,
+            'openid' => $this->openid,
 
-            'check_name'    => $this->check_name,
-            're_user_name'  => $this->payer_real_name,
-            'amount'    => $this->amount,// 此处需要处理单位为分
-            'desc'  => $this->desc,
+            'check_name' => $this->check_name,
+            're_user_name' => $this->payer_real_name,
+            'amount' => $this->amount,// 此处需要处理单位为分
+            'desc' => $this->desc,
 
             // $_SERVER["REMOTE_ADDR"]  获取客户端接口。此处获取php所在机器的ip  如果无法获取，则使用该ip
-            'spbill_create_ip'  => $this->client_ip,
+            'spbill_create_ip' => $this->client_ip,
         ];
 
         $this->retData = ArrayUtil::paraFilter($this->retData);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Query\Wx;
 
 use Payment\Common\Weixin\Data\Query\ChargeQueryData;
@@ -42,20 +43,12 @@ class WxChargeQuery extends WxBaseStrategy
 
         // 请求失败，可能是网络
         if ($data['return_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $data['return_msg'],
-                'channel'   => Config::WX_CHARGE,// 支付查询
-            ];
+            return ['is_success' => 'F', 'error' => $data['return_msg'], 'channel' => Config::WX_CHARGE];
         }
 
         // 业务失败
         if ($data['result_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $data['err_code_des'],
-                'channel'   => Config::WX_CHARGE,// 支付查询
-            ];
+            return ['is_success' => 'F', 'error' => $data['err_code_des'], 'channel' => Config::WX_CHARGE];
         }
 
         // 正确
@@ -74,16 +67,16 @@ class WxChargeQuery extends WxBaseStrategy
         $totalFee = bcdiv($data['total_fee'], 100, 2);
 
         $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'amount'   => $totalFee,
-                'channel'   => Config::WX_CHARGE,// 支付查询
-                'order_no'   => $data['out_trade_no'],
-                'buyer_id'   => $data['openid'],
-                'trade_state'   => strtolower($data['trade_state']),
-                'transaction_id'   => $data['transaction_id'],
-                'time_end'   => date('Y-m-d H:i:s', strtotime($data['time_end'])),
-                'return_param'    => $data['attach'],
+            'is_success' => 'T',
+            'response' => [
+                'amount' => $totalFee,
+                'channel' => Config::WX_CHARGE,// 支付查询
+                'order_no' => $data['out_trade_no'],
+                'buyer_id' => $data['openid'],
+                'trade_state' => strtolower($data['trade_state']),
+                'transaction_id' => $data['transaction_id'],
+                'time_end' => date('Y-m-d H:i:s', strtotime($data['time_end'])),
+                'return_param' => $data['attach'],
                 'terminal_id' => $data['device_info'],
                 'trade_type' => $data['trade_type'],
                 'bank_type' => $data['bank_type'],

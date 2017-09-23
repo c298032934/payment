@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Wx;
 
 use Payment\Common\Weixin\Data\Charge\QrChargeData;
@@ -13,6 +14,10 @@ use Payment\Common\Weixin\WxBaseStrategy;
  */
 class WxQrCharge extends WxBaseStrategy
 {
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->tradeType = 'NATIVE';// 微信文档这里写错了
@@ -22,7 +27,7 @@ class WxQrCharge extends WxBaseStrategy
     /**
      * 处理扫码支付的返回值
      * @param array $ret
-     * @return string  可生产二维码的uri
+     * @return string|array 可生产二维码的uri
      * @author helei
      */
     protected function retData(array $ret)

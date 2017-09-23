@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: helei
- * Date: 2017/3/7
- * Time: 下午1:32
- */
 
 namespace Payment\Common\Weixin\Data\Query;
-
 
 use Payment\Common\PayException;
 use Payment\Common\Weixin\Data\WxBaseData;
@@ -26,18 +19,20 @@ use Payment\Utils\ArrayUtil;
  */
 class RefundQueryData extends WxBaseData
 {
-
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $this->retData = [
             'appid' => $this->appId,
-            'mch_id'    => $this->mchId,
+            'mch_id' => $this->mchId,
             'device_info' => $this->terminal_id,
             'nonce_str' => $this->nonceStr,
             'sign_type' => $this->signType,
 
-            'transaction_id'    => $this->transaction_id,
-            'out_trade_no'  => $this->out_trade_no,
+            'transaction_id' => $this->transaction_id,
+            'out_trade_no' => $this->out_trade_no,
             'out_refund_no' => $this->refund_no,
             'refund_id' => $this->refund_id,
 
@@ -49,6 +44,10 @@ class RefundQueryData extends WxBaseData
         $this->retData = ArrayUtil::paraFilter($this->retData);
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
         $transactionId = $this->transaction_id;// 微信交易号，查询效率高

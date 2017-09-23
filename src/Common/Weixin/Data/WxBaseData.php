@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Weixin\Data;
 
 use Payment\Common\BaseData;
@@ -24,7 +25,7 @@ use Payment\Common\BaseData;
  *
  * @note 服务商信息
  * @property string $sub_appid 微信分配的子商户公众账号ID
- * @property string $sub_mch_id 	微信支付分配的子商户号
+ * @property string $sub_mch_id    微信支付分配的子商户号
  *
  * @package Payment\Common\Weixin\Dataa
  *
@@ -33,7 +34,6 @@ use Payment\Common\BaseData;
  */
 abstract class WxBaseData extends BaseData
 {
-
     /**
      * 签名算法实现  便于后期扩展微信不同的加密方式
      * @param string $signStr

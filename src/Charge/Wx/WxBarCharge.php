@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Wx;
 
 use Payment\Common\Weixin\Data\Charge\BarChargeData;
@@ -15,6 +16,10 @@ class WxBarCharge extends WxBaseStrategy
 {
     protected $reqUrl = 'https://api.mch.weixin.qq.com/{debug}/pay/micropay';
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         return BarChargeData::class;
@@ -23,7 +28,7 @@ class WxBarCharge extends WxBaseStrategy
     /**
      * 返回的数据
      * @param array $ret
-     * @return array
+     * @return mixed
      */
     protected function retData(array $ret)
     {

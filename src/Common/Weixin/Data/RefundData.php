@@ -1,9 +1,4 @@
 <?php
-/**
- * @author: helei
- * @createTime: 2016-08-03 15:14
- * @description:
- */
 
 namespace Payment\Common\Weixin\Data;
 
@@ -28,20 +23,23 @@ use Payment\Utils\ArrayUtil;
  */
 class RefundData extends WxBaseData
 {
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $this->retData = [
             'appid' => $this->appId,
-            'mch_id'    => $this->mchId,
+            'mch_id' => $this->mchId,
             'device_info' => $this->terminal_id,
             'nonce_str' => $this->nonceStr,
             'refund_fee_type' => $this->feeType,
-            'transaction_id'    => $this->transaction_id,
+            'transaction_id' => $this->transaction_id,
             'out_trade_no' => $this->out_trade_no,
-            'out_refund_no'  => $this->refund_no,// 商户退款单号
+            'out_refund_no' => $this->refund_no,// 商户退款单号
             'total_fee' => $this->total_fee,// 订单总金额
             'refund_fee' => $this->refund_fee,// 退款总金额
-            'op_user_id'    => $this->operator_id,//操作员帐号, 默认为商户号
+            'op_user_id' => $this->operator_id,//操作员帐号, 默认为商户号
             'refund_account' => $this->refund_account,// 退款账户类型
 
             // 服务商
@@ -82,7 +80,7 @@ class RefundData extends WxBaseData
             throw new PayException('退款金额不能大于订单总金额');
         }
 
-        if (! in_array($refundAccount, [WxConfig::REFUND_RECHARGE, WxConfig::REFUND_UNSETTLED])) {
+        if (!in_array($refundAccount, [WxConfig::REFUND_RECHARGE, WxConfig::REFUND_UNSETTLED])) {
             $this->refund_account = WxConfig::REFUND_UNSETTLED;
         }
 

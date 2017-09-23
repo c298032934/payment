@@ -1,12 +1,6 @@
 <?php
-/**
- * @author: helei
- * @createTime: 2016-08-02 10:27
- * @description:
- */
 
 namespace Payment\Common\Weixin\Data;
-
 
 /**
  * Class BackPubChargeData
@@ -20,17 +14,24 @@ namespace Payment\Common\Weixin\Data;
  */
 class BackPubChargeData extends WxBaseData
 {
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $this->retData = [
             'appId' => $this->appId,
             'timeStamp' => time() . '',
-            'nonceStr'  => $this->nonceStr,
-            'package'   => 'prepay_id=' . $this->prepay_id,
-            'signType'  => 'MD5',// 签名算法，暂支持MD5
+            'nonceStr' => $this->nonceStr,
+            'package' => 'prepay_id=' . $this->prepay_id,
+            'signType' => 'MD5',// 签名算法，暂支持MD5
         ];
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
         // 不进行检查

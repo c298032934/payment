@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Refund;
 
 use Payment\Common\Weixin\Data\RefundData;
@@ -15,6 +16,10 @@ class WxRefund extends WxBaseStrategy
 {
     protected $reqUrl = 'https://api.mch.weixin.qq.com/{debug}/secapi/pay/refund';
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         return RefundData::class;
@@ -35,18 +40,12 @@ class WxRefund extends WxBaseStrategy
 
         // 请求失败，可能是网络
         if ($ret['return_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $ret['return_msg']
-            ];
+            return ['is_success' => 'F', 'error' => $ret['return_msg']];
         }
 
         // 业务失败
         if ($ret['result_code'] != 'SUCCESS') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $ret['err_code_des']
-            ];
+            return ['is_success' => 'F', 'error' => $ret['err_code_des']];
         }
 
         return $this->createBackData($ret);
@@ -66,16 +65,16 @@ class WxRefund extends WxBaseStrategy
         $refund_fee = bcdiv($data['refund_fee'], 100, 2);
 
         $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'transaction_id'   => $data['transaction_id'],
-                'order_no'  => $data['out_trade_no'],
+            'is_success' => 'T',
+            'response' => [
+                'transaction_id' => $data['transaction_id'],
+                'order_no' => $data['out_trade_no'],
                 'refund_no' => $data['out_refund_no'],
                 'refund_id' => $data['refund_id'],
-                'refund_fee'    => $refund_fee,
+                'refund_fee' => $refund_fee,
                 'refund_channel' => $data['refund_channel'],
-                'amount'   => $total_fee,
-                'channel'   => Config::WX_REFUND,
+                'amount' => $total_fee,
+                'channel' => Config::WX_REFUND,
 
                 'coupon_refund_fee' => bcdiv($data['coupon_refund_fee'], 100, 2),
                 'coupon_refund_count' => $data['coupon_refund_count'],

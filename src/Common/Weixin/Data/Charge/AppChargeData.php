@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Weixin\Data\Charge;
 
 use Payment\Utils\ArrayUtil;
@@ -12,6 +13,9 @@ use Payment\Utils\ArrayUtil;
  */
 class AppChargeData extends ChargeBaseData
 {
+    /**
+     * 构建用于支付的签名相关数据
+     */
     protected function buildData()
     {
         $info = $this->scene_info;
@@ -22,22 +26,22 @@ class AppChargeData extends ChargeBaseData
 
         $signData = [
             'appid' => trim($this->appId),
-            'mch_id'    => trim($this->mchId),
-            'device_info'   => $this->terminal_id,
+            'mch_id' => trim($this->mchId),
+            'device_info' => $this->terminal_id,
             'nonce_str' => $this->nonceStr,
             'sign_type' => $this->signType,
-            'body'  => trim($this->subject),
+            'body' => trim($this->subject),
             //'detail' => json_encode($this->body, JSON_UNESCAPED_UNICODE),
-            'attach'    => trim($this->return_param),
-            'out_trade_no'  => trim($this->order_no),
-            'fee_type'  => $this->feeType,
+            'attach' => trim($this->return_param),
+            'out_trade_no' => trim($this->order_no),
+            'fee_type' => $this->feeType,
             'total_fee' => $this->amount,
-            'spbill_create_ip'  => trim($this->client_ip),
-            'time_start'    => $this->timeStart,
-            'time_expire'   => $this->timeout_express,
+            'spbill_create_ip' => trim($this->client_ip),
+            'time_start' => $this->timeStart,
+            'time_expire' => $this->timeout_express,
             //'goods_tag' => '订单优惠标记',
-            'notify_url'    => $this->notifyUrl,
-            'trade_type'    => $this->tradeType, //设置APP支付
+            'notify_url' => $this->notifyUrl,
+            'trade_type' => $this->tradeType, //设置APP支付
             //'product_id' => '商品id',
             'limit_pay' => $this->limitPay,  // 指定不使用信用卡
             //'openid' => '用户标识',

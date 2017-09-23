@@ -20,6 +20,9 @@ final class WxConfig extends ConfigInterface
     // 微信分配的公众账号ID
     public $appId;
 
+    // 微信开发者密码
+    public $appSecret;
+
     // 微信支付分配的商户号
     public $mchId;
 
@@ -80,6 +83,13 @@ final class WxConfig extends ConfigInterface
             throw new PayException('必须提供微信分配的公众账号ID');
         }
 
+        // 检查 微信分配的开发者密码
+        if (key_exists('app_secret', $config) && !empty($config['app_secret'])) {
+            $this->appSecret = $config['app_secret'];
+        } else {
+            throw new PayException('必须提供微信分配的开发者密码');
+        }
+
         // 检查 微信支付分配的商户号
         if (key_exists('mch_id', $config) && !empty($config['mch_id'])) {
             $this->mchId = $config['mch_id'];
@@ -87,11 +97,9 @@ final class WxConfig extends ConfigInterface
             throw new PayException('必须提供微信支付分配的商户号');
         }
 
-        // 检查 异步通知的url
+        // 初始 微信异步通知地址，可为空
         if (key_exists('notify_url', $config) && !empty($config['notify_url'])) {
             $this->notifyUrl = trim($config['notify_url']);
-        } else {
-            throw new PayException('异步通知的url必须提供.');
         }
 
         // 设置交易开始时间 格式为yyyyMMddHHmmss   .再次之前一定要设置时区
@@ -111,7 +119,8 @@ final class WxConfig extends ConfigInterface
         }
 
         // 设置禁止使用的支付方式
-        if (key_exists('limit_pay', $config) && !empty($config['limit_pay']) && $config['limit_pay'][0] === 'no_credit') {
+        if (key_exists('limit_pay',
+                $config) && !empty($config['limit_pay']) && $config['limit_pay'][0] === 'no_credit') {
             $this->limitPay = $config['limit_pay'][0];
         }
 

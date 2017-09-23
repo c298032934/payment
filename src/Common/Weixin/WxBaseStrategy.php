@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Weixin;
 
 use GuzzleHttp\Client;
@@ -38,7 +39,7 @@ abstract class WxBaseStrategy implements BaseStrategy
     protected $reqData;
 
     /**
-     * WxBaseStrategy constructor.
+     * 构造方法
      * @param array $config
      * @throws PayException
      */
@@ -66,7 +67,7 @@ abstract class WxBaseStrategy implements BaseStrategy
         }
 
         if ($this->config->useSandbox) {
-            $url = str_ireplace('{debug}',WxConfig::SANDBOX_PRE, $url);
+            $url = str_ireplace('{debug}', WxConfig::SANDBOX_PRE, $url);
         } else {
             $url = str_ireplace('{debug}/', '', $url);
         }
