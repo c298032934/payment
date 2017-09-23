@@ -1,8 +1,10 @@
 <?php
+
 namespace Payment;
 
 use Payment\Notify\AliNotify;
 use Payment\Notify\CmbNotify;
+use Payment\Notify\UpacpNotify;
 use Payment\Notify\NotifyStrategy;
 use Payment\Notify\PayNotifyInterface;
 use Payment\Notify\WxNotify;
@@ -19,11 +21,10 @@ use Payment\Common\PayException;
 class NotifyContext
 {
     /**
-     * 支付的渠道
+     * 回调的渠道
      * @var NotifyStrategy
      */
     protected $notify;
-
 
     /**
      * 设置对应的通知渠道
@@ -47,8 +48,11 @@ class NotifyContext
                 case Config::CMB_CHARGE:
                     $this->notify = new CmbNotify($config);
                     break;
+                case Config::UPACP_CHARGE:
+                    $this->notify = new UpacpNotify($config);
+                    break;
                 default:
-                    throw new PayException('当前仅支持：ALI_CHARGE WX_CHARGE CMB_CHARGE 常量');
+                    throw new PayException('当前仅支持：当前仅支持：支付宝 微信 招商一网通 银联');
             }
         } catch (PayException $e) {
             throw $e;
@@ -74,7 +78,7 @@ class NotifyContext
      */
     public function notify(PayNotifyInterface $notify)
     {
-        if (! $this->notify instanceof NotifyStrategy) {
+        if (!$this->notify instanceof NotifyStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 

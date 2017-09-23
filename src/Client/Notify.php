@@ -26,6 +26,8 @@ class Notify
         Config::WX_CHARGE,
         // 招行一网通
         Config::CMB_CHARGE,
+        // 银联
+        Config::UPACP_CHARGE,
     ];
 
     /**

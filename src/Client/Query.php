@@ -32,6 +32,8 @@ class Query
         // 招行一网通
         Config::CMB_CHARGE,
         Config::CMB_REFUND,
+        // 银联
+        Config::UPACP_CHARGE,
     ];
 
     /**

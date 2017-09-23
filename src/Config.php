@@ -76,6 +76,14 @@ final class Config
 
     const CMB_REFUND = 'cmb_refund';// 招商退款
 
+    //========================= 银联相关接口 =======================//
+    // 支付常量
+    const UPACP_CHANNEL_APP = 'upacp_app';// 银联app
+
+    const UPACP_CHANNEL_WEB = 'upacp_web';// 银联web 包括wap
+
+    // 其他操作常量
+    const UPACP_CHARGE = 'upacp_charge';// 支付
 
     //========================= 金额问题设置 =======================//
     const PAY_MIN_FEE = '0.01';// 支付的最小金额
@@ -93,4 +101,5 @@ final class Config
     const WECHAT_PAY = 'wechat';
     const ALI_PAY = 'ali';
     const CMB_PAY = 'cmb';
+    const UPACP_PAY = 'upacp';
 }

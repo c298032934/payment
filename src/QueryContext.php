@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment;
 
 use Payment\Common\BaseStrategy;
@@ -11,6 +12,7 @@ use Payment\Query\Cmb\CmbRefundQuery;
 use Payment\Query\Wx\WxChargeQuery;
 use Payment\Query\Wx\WxRefundQuery;
 use Payment\Query\Wx\WxTransferQuery;
+use Payment\Query\Upacp\UpacpChargeQuery;
 
 /**
  * 查询上下文
@@ -26,7 +28,6 @@ class QueryContext
      * @var BaseStrategy
      */
     protected $query;
-
 
     /**
      * 设置对应的查询渠道
@@ -67,8 +68,11 @@ class QueryContext
                 case Config::CMB_REFUND:// 招商退款查询
                     $this->query = new CmbRefundQuery($config);
                     break;
+                case Config::UPACP_CHARGE:// 银联支付订单查询
+                    $this->query = new UpacpChargeQuery($config);
+                    break;
                 default:
-                    throw new PayException('当前仅支持：ALI_CHARGE ALI_REFUND WX_CHARGE WX_REFUND WX_TRANSFER CMB_CHARGE CMB_REFUND');
+                    throw new PayException('当前仅支持：当前仅支持：支付宝 微信 招商一网通 银联');
             }
         } catch (PayException $e) {
             throw $e;
@@ -79,19 +83,13 @@ class QueryContext
      * 通过环境类调用支付异步通知
      *
      * @param array $data
-     *      // 二者设置一个即可
-     *      $data => [
-     *          'transaction_id'    => '原付款支付宝交易号',
-     *          'order_no' => '商户订单号',
-     *      ];
-     *
      * @return array
      * @throws PayException
      * @author helei
      */
     public function query(array $data)
     {
-        if (! $this->query instanceof BaseStrategy) {
+        if (!$this->query instanceof BaseStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 

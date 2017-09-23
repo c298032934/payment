@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment;
 
 use Payment\Common\BaseStrategy;
@@ -41,7 +42,7 @@ class TransferContext
                     $this->transfer = new WxTransfer($config);
                     break;
                 default:
-                    throw new PayException('当前仅支持：ALI WEIXIN两个常量');
+                    throw new PayException('当前仅支持：支付宝 微信');
             }
         } catch (PayException $e) {
             throw $e;
@@ -59,7 +60,7 @@ class TransferContext
      */
     public function transfer(array $data)
     {
-        if (! $this->transfer instanceof BaseStrategy) {
+        if (!$this->transfer instanceof BaseStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 

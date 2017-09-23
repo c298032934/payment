@@ -34,6 +34,9 @@ class Charge
         Config::WX_CHANNEL_LITE,// 微信小程序支付
         // 招行一网通
         Config::CMB_CHANNEL_APP,// 招行一网通
+        // 银联
+        Config::UPACP_CHANNEL_APP, //银联APP支付
+        Config::UPACP_CHANNEL_WEB, // 银联WEB支付 包括WAP支付
     ];
 
     /**

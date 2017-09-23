@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment;
 
 use Payment\Common\BaseStrategy;
@@ -23,7 +24,6 @@ class RefundContext
      */
     protected $refund;
 
-
     /**
      * 设置对应的退款渠道
      * @param string $channel 退款渠道
@@ -47,7 +47,7 @@ class RefundContext
                     $this->refund = new CmbRefund($config);
                     break;
                 default:
-                    throw new PayException('当前仅支持：ALI WEIXIN CMB');
+                    throw new PayException('当前仅支持：当前仅支持：支付宝 微信 招商一网通');
             }
         } catch (PayException $e) {
             throw $e;
@@ -65,7 +65,7 @@ class RefundContext
      */
     public function refund(array $data)
     {
-        if (! $this->refund instanceof BaseStrategy) {
+        if (!$this->refund instanceof BaseStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment;
 
 use Payment\Charge\Ali\AliAppCharge;
@@ -7,6 +8,8 @@ use Payment\Charge\Ali\AliWapCharge;
 use Payment\Charge\Ali\AliWebCharge;
 use Payment\Charge\Ali\AliQrCharge;
 use Payment\Charge\Cmb\CmbCharge;
+use Payment\Charge\Upacp\UpacpAppCharge;
+use Payment\Charge\Upacp\UpacpWebCharge;
 use Payment\Charge\Wx\WxAppCharge;
 use Payment\Charge\Wx\WxBarCharge;
 use Payment\Charge\Wx\WxPubCharge;
@@ -35,7 +38,6 @@ class ChargeContext
      * @var BaseStrategy
      */
     protected $channel;
-
 
     /**
      * 设置对应的支付渠道
@@ -87,8 +89,14 @@ class ChargeContext
                 case Config::CMB_CHANNEL_APP:
                     $this->channel = new CmbCharge($config);
                     break;
+                case Config::UPACP_CHANNEL_APP:
+                    $this->channel = new UpacpAppCharge($config);
+                    break;
+                case Config::UPACP_CHANNEL_WEB:
+                    $this->channel = new UpacpWebCharge($config);
+                    break;
                 default:
-                    throw new PayException('当前仅支持：支付宝  微信 招商一网通');
+                    throw new PayException('当前仅支持：支付宝 微信 招商一网通 银联');
             }
         } catch (PayException $e) {
             throw $e;
@@ -99,24 +107,13 @@ class ChargeContext
      * 通过环境类调用支付
      * @param array $data
      *
-     * ```php
-     * $payData = [
-     *      "order_no" => createPayid(),
-     *      "amount" => '0.01',// 单位为元 ,最小为0.01
-     *      "client_ip" => '127.0.0.1',
-     *      "subject" => '测试支付',
-     *      "body" => '支付接口测试',
-     *      "extra_param"   => '',
-     * ];
-     * ```
-     *
      * @return array
      * @throws PayException
      * @author helei
      */
     public function charge(array $data)
     {
-        if (! $this->channel instanceof BaseStrategy) {
+        if (!$this->channel instanceof BaseStrategy) {
             throw new PayException('请检查初始化是否正确');
         }
 
