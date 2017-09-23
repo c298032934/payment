@@ -115,11 +115,7 @@ class CmbConfig extends ConfigInterface
 
         $this->limitPay = '';
         // 设置禁止使用的支付方式
-        if (
-            key_exists('limit_pay', $config) &&
-            !empty($config['limit_pay']) &&
-            strtoupper($config['limit_pay'][0]) === 'A'
-        ) {
+        if (key_exists('limit_pay', $config) && !empty($config['limit_pay']) && strtoupper($config['limit_pay'][0]) === 'A') {
             $this->limitPay = 'A';
         }
 
