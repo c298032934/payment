@@ -2,7 +2,7 @@
 namespace Payment\Notify;
 
 use Payment\Common\PayException;
-use Payment\Common\WxConfig;
+use Payment\Common\Weixin\WxConfig;
 use Payment\Config;
 use Payment\Utils\ArrayUtil;
 use Payment\Utils\DataParser;

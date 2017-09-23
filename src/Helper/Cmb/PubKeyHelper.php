@@ -3,7 +3,7 @@ namespace Payment\Helper\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
 use Payment\Common\Cmb\Data\PubKeyData;
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 use Payment\Config;
 
 /**

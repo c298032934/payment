@@ -10,7 +10,7 @@ namespace Payment\Query\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
 use Payment\Common\Cmb\Data\Query\RefundQueryData;
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 use Payment\Config;
 
 class CmbRefundQuery extends CmbBaseStrategy

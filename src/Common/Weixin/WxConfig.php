@@ -1,7 +1,10 @@
 <?php
-namespace Payment\Common;
 
-use Payment\Common\Weixin\WechatHelper;
+namespace Payment\Common\Weixin;
+
+use Payment\Common\ConfigInterface;
+use Payment\Common\PayException;
+use Payment\Config;
 use Payment\Utils\ArrayUtil;
 use Payment\Utils\StrUtil;
 
@@ -67,10 +70,7 @@ final class WxConfig extends ConfigInterface
      */
     protected function initConfig(array $config)
     {
-        $basePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'CacertFile' . DIRECTORY_SEPARATOR;
-        $this->cacertPath = "{$basePath}wx_cacert.pem";
-
-
+        $this->cacertPath = $this->getRoot() . 'CacertFile' . DIRECTORY_SEPARATOR . "wx_cacert.pem";
         $config = ArrayUtil::paraFilter($config);
 
         // 检查 微信分配的公众账号ID
@@ -111,7 +111,8 @@ final class WxConfig extends ConfigInterface
         }
 
         // 设置禁止使用的支付方式
-        if (key_exists('limit_pay', $config) && !empty($config['limit_pay']) && $config['limit_pay'][0] === 'no_credit') {
+        if (key_exists('limit_pay',
+                $config) && !empty($config['limit_pay']) && $config['limit_pay'][0] === 'no_credit') {
             $this->limitPay = $config['limit_pay'][0];
         }
 
@@ -124,10 +125,10 @@ final class WxConfig extends ConfigInterface
         }
 
         // 以下两个文件，如果是调用资金流向接口，必须提供
-        if (! empty($config['app_cert_pem'])) {
+        if (!empty($config['app_cert_pem'])) {
             $this->appCertPem = $config['app_cert_pem'];
         }
-        if (! empty($config['app_key_pem'])) {
+        if (!empty($config['app_key_pem'])) {
             $this->appKeyPem = $config['app_key_pem'];
         }
 
@@ -149,5 +150,14 @@ final class WxConfig extends ConfigInterface
         } else {
             $this->useSandbox = false;// 不是沙箱模式
         }
+    }
+
+    /**
+     * 获取所属类型
+     * @return string
+     */
+    public function getChannel()
+    {
+        return Config::WECHAT_PAY;
     }
 }

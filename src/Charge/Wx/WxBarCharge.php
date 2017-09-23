@@ -3,7 +3,6 @@ namespace Payment\Charge\Wx;
 
 use Payment\Common\Weixin\Data\Charge\BarChargeData;
 use Payment\Common\Weixin\WxBaseStrategy;
-use Payment\Common\WxConfig;
 
 /**
  * @author: helei

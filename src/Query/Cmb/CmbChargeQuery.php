@@ -4,7 +4,7 @@ namespace Payment\Query\Cmb;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
 use Payment\Common\Cmb\Data\Query\ChargeQueryData;
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 use Payment\Config;
 
 /**

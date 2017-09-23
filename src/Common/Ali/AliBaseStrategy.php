@@ -3,7 +3,6 @@ namespace Payment\Common\Ali;
 
 use GuzzleHttp\Client;
 use InvalidArgumentException;
-use Payment\Common\AliConfig;
 use Payment\Common\BaseData;
 use Payment\Common\BaseStrategy;
 use Payment\Common\PayException;

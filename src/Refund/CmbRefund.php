@@ -3,7 +3,7 @@ namespace Payment\Refund;
 
 use Payment\Common\Cmb\CmbBaseStrategy;
 use Payment\Common\Cmb\Data\RefundData;
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 use Payment\Config;
 
 /**

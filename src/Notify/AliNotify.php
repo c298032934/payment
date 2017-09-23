@@ -1,7 +1,7 @@
 <?php
 namespace Payment\Notify;
 
-use Payment\Common\AliConfig;
+use Payment\Common\Ali\AliConfig;
 use Payment\Common\PayException;
 use Payment\Config;
 use Payment\Utils\ArrayUtil;

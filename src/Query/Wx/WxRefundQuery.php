@@ -3,7 +3,6 @@ namespace Payment\Query\Wx;
 
 use Payment\Common\Weixin\Data\Query\RefundQueryData;
 use Payment\Common\Weixin\WxBaseStrategy;
-use Payment\Common\WxConfig;
 use Payment\Config;
 
 /**

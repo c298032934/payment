@@ -2,7 +2,7 @@
 namespace Payment\Common\Cmb\Data\Charge;
 
 use Payment\Common\Cmb\Data\CmbBaseData;
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 use Payment\Common\PayException;
 use Payment\Config;
 

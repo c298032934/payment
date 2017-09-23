@@ -4,8 +4,6 @@ namespace Payment\Common\Weixin;
 use GuzzleHttp\Client;
 use Payment\Common\PayException;
 use Payment\Common\Weixin\Data\WxBaseData;
-use Payment\Common\WxConfig;
-use Payment\Utils\Curl;
 use Payment\Utils\DataParser;
 use Payment\Utils\StrUtil;
 

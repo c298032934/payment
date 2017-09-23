@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use Payment\Common\PayException;
 use Payment\Client\Refund;
 use Payment\Config;
-use Payment\Common\WxConfig;
+use Payment\Common\Weixin\WxConfig;
 
 date_default_timezone_set('Asia/Shanghai');
 $wxConfig = require_once __DIR__ . '/../wxconfig.php';

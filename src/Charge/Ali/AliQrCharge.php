@@ -3,7 +3,6 @@ namespace Payment\Charge\Ali;
 
 use Payment\Common\Ali\AliBaseStrategy;
 use Payment\Common\Ali\Data\Charge\QrChargeData;
-use Payment\Common\AliConfig;
 use Payment\Common\PayException;
 
 /**

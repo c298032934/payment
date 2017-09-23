@@ -8,7 +8,7 @@
 
 namespace Payment\Common\Cmb\Data;
 
-use Payment\Common\CmbConfig;
+use Payment\Common\Cmb\CmbConfig;
 
 /**
  * 获取招商的公钥

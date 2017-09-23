@@ -3,7 +3,6 @@ namespace Payment\Query\Wx;
 
 use Payment\Common\Weixin\Data\Query\ChargeQueryData;
 use Payment\Common\Weixin\WxBaseStrategy;
-use Payment\Common\WxConfig;
 use Payment\Config;
 use Payment\Utils\ArrayUtil;
 

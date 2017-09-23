@@ -8,7 +8,7 @@
 namespace Payment\Common\Weixin\Data;
 
 use Payment\Common\PayException;
-use Payment\Common\WxConfig;
+use Payment\Common\Weixin\WxConfig;
 use Payment\Utils\ArrayUtil;
 
 /**

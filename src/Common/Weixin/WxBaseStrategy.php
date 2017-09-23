@@ -5,7 +5,6 @@ use GuzzleHttp\Client;
 use Payment\Common\BaseData;
 use Payment\Common\BaseStrategy;
 use Payment\Common\PayException;
-use Payment\Common\WxConfig;
 use Payment\Utils\ArrayUtil;
 use Payment\Utils\DataParser;
 

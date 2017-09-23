@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common;
 
 /**
@@ -52,4 +53,19 @@ abstract class ConfigInterface
      * @param array $config
      */
     abstract protected function initConfig(array $config);
+
+    /**
+     * 获取根目录
+     * @return string
+     */
+    public function getRoot()
+    {
+        return dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * 获取所属类型
+     * @return string
+     */
+    abstract public function getChannel();
 }
