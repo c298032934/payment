@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Ali\Data\Query;
 
 use Payment\Common\Ali\Data\AliBaseData;
@@ -16,18 +17,25 @@ use Payment\Common\PayException;
  */
 class RefundQueryData extends AliBaseData
 {
-
+    /**
+     * 支付宝构建请求查询的数据
+     * @return array
+     */
     protected function getBizContent()
     {
         $content = [
-            'out_trade_no'    => $this->out_trade_no,
-            'trade_no'        => $this->trade_no,
-            'out_request_no'    => $this->refund_no,
+            'out_trade_no' => $this->out_trade_no,
+            'trade_no' => $this->trade_no,
+            'out_request_no' => $this->refund_no,
         ];
 
         return $content;
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
         $tradeNo = $this->trade_no;// 支付宝交易号，查询效率高

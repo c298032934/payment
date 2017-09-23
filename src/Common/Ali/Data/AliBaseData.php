@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Ali\Data;
 
 use Payment\Common\BaseData;
@@ -7,13 +8,13 @@ use Payment\Utils\Rsa2Encrypt;
 use Payment\Utils\RsaEncrypt;
 
 /**
- * Class BaseData
+ * 支付宝相关数据的基类
  *
  * @property string $getewayUrl  支付宝网关
  * @property string $appId   支付宝分配给开发者的应用ID
  * @property string $method  接口名称
- * @property string $format  	仅支持JSON
- * @property string $returnUrl  	HTTP/HTTPS开头字符串
+ * @property string $format    仅支持JSON
+ * @property string $returnUrl    HTTP/HTTPS开头字符串
  * @property string $charset  请求使用的编码格式，如utf-8,gbk,gb2312等 当前仅支持  utf-8
  * @property string $timestamp  发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
  * @property string $version   调用的接口版本，固定为：1.0
@@ -29,7 +30,10 @@ use Payment\Utils\RsaEncrypt;
  */
 abstract class AliBaseData extends BaseData
 {
-
+    /**
+     * 返回处理之后的数据
+     * @return array
+     */
     public function getData()
     {
         $data = parent::getData();
@@ -76,17 +80,17 @@ abstract class AliBaseData extends BaseData
 
         $signData = [
             // 公共参数
-            'app_id'        => $this->appId,
-            'method'        => $this->method,
-            'format'        => $this->format,
-            'charset'       => $this->charset,
-            'sign_type'     => $this->signType,
-            'timestamp'     => $this->timestamp,
-            'version'       => $this->version,
-            'notify_url'    => $this->notifyUrl,
+            'app_id' => $this->appId,
+            'method' => $this->method,
+            'format' => $this->format,
+            'charset' => $this->charset,
+            'sign_type' => $this->signType,
+            'timestamp' => $this->timestamp,
+            'version' => $this->version,
+            'notify_url' => $this->notifyUrl,
 
             // 业务参数
-            'biz_content'   => json_encode($bizContent, JSON_UNESCAPED_UNICODE),
+            'biz_content' => json_encode($bizContent, JSON_UNESCAPED_UNICODE),
         ];
 
         // 电脑支付  wap支付添加额外参数

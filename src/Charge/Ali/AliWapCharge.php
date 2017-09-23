@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Ali;
 
 use Payment\Common\Ali\AliBaseStrategy;
@@ -24,7 +25,6 @@ class AliWapCharge extends AliBaseStrategy
     public function getBuildDataClass()
     {
         $this->config->method = $this->method;
-        // 以下两种方式任选一种
         return WapChargeData::class;
     }
 

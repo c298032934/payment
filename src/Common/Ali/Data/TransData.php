@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Ali\Data;
 
 use Payment\Common\PayException;
@@ -40,7 +41,7 @@ class TransData extends AliBaseData
             throw new PayException('请传入 商户转账唯一订单号');
         }
 
-        if (empty($payeeType) || ! in_array($payeeType, ['ALIPAY_USERID', 'ALIPAY_LOGONID'])) {
+        if (empty($payeeType) || !in_array($payeeType, ['ALIPAY_USERID', 'ALIPAY_LOGONID'])) {
             throw new PayException('请传入收款账户类型');
         }
 
@@ -53,26 +54,26 @@ class TransData extends AliBaseData
         }
 
         if (bccomp($amount, Config::TRANS_FEE, 2) !== -1 && empty($remark)) {
-            throw new PayException('转账金额大于等于' . Config::TRANS_FEE , '必须设置 remark');
+            throw new PayException('转账金额大于等于' . Config::TRANS_FEE, '必须设置 remark');
         }
     }
 
     /**
      * 业务请求参数的集合，最大长度不限，除公共参数外所有请求参数都必须放在这个参数中传递
      *
-     * @return string
+     * @return array
      */
     protected function getBizContent()
     {
         $content = [
-            'out_biz_no'    => $this->trans_no,// 商户转账唯一订单号
-            'payee_type'        => strtoupper($this->payee_type),// 收款方账户类型
-            'payee_account'     => $this->payee_account,// 收款方账户
-            'amount'     => $this->amount,
-            'payer_show_name'       => $this->payer_show_name,
-            'payer_real_name'    => $this->payer_real_name,
-            'payee_real_name'          => $this->payee_real_name,
-            'remark'       => $this->remark,
+            'out_biz_no' => $this->trans_no,// 商户转账唯一订单号
+            'payee_type' => strtoupper($this->payee_type),// 收款方账户类型
+            'payee_account' => $this->payee_account,// 收款方账户
+            'amount' => $this->amount,
+            'payer_show_name' => $this->payer_show_name,
+            'payer_real_name' => $this->payer_real_name,
+            'payee_real_name' => $this->payee_real_name,
+            'remark' => $this->remark,
         ];
 
         return $content;

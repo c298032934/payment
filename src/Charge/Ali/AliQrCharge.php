@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Charge\Ali;
 
 use Payment\Common\Ali\AliBaseStrategy;
@@ -18,6 +19,10 @@ class AliQrCharge extends AliBaseStrategy
 {
     protected $method = 'alipay.trade.precreate';
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->method = $this->method;

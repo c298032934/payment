@@ -1,9 +1,9 @@
 <?php
+
 namespace Payment\Common\Ali\Data\Query;
 
 use Payment\Common\Ali\Data\AliBaseData;
 use Payment\Common\PayException;
-use Payment\Utils\ArrayUtil;
 
 /**
  * 支付查询数据构造
@@ -11,7 +11,7 @@ use Payment\Utils\ArrayUtil;
  * @link      https://www.gitbook.com/book/helei112g1/payment-sdk/details
  * @link      https://helei112g.github.io/
  *
- * @property string $trade_no 支付宝的订单号，优先使用
+ * @property string $transaction_id 支付宝的订单号，优先使用
  * @property string $out_trade_no 商户系统内部的订单号
  *
  * @package Payment\Common\Ali\Data\Query
@@ -21,13 +21,13 @@ class ChargeQueryData extends AliBaseData
 {
     /**
      * 构建业务数据
-     * @return string
+     * @return array
      */
     protected function getBizContent()
     {
         $content = [
-            'out_trade_no'    => $this->out_trade_no,
-            'trade_no'        => $this->trade_no,
+            'out_trade_no' => $this->out_trade_no,
+            'trade_no' => $this->transaction_id,
         ];
 
         return $content;
@@ -39,7 +39,7 @@ class ChargeQueryData extends AliBaseData
      */
     protected function checkDataParam()
     {
-        $tradeNo = $this->trade_no;// 支付宝交易号，查询效率高
+        $tradeNo = $this->transaction_id;// 支付宝交易号，查询效率高
         $outTradeNo = $this->out_trade_no;// 商户订单号，查询效率低，不建议使用
 
         // 二者不能同时为空

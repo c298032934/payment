@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\ChargeContext;
@@ -18,21 +19,21 @@ use Payment\Config;
 class Charge
 {
     private static $supportChannel = [
+        // 支付宝
         Config::ALI_CHANNEL_APP,// 支付宝 APP 支付
         Config::ALI_CHANNEL_WAP, // 支付宝手机网页支付
         Config::ALI_CHANNEL_WEB, // 支付宝电脑网站支付
         Config::ALI_CHANNEL_QR, // 支付宝当面付-扫码支付
         Config::ALI_CHANNEL_BAR,// 支付宝当面付-条码支付
-
+        // 微信
         Config::WX_CHANNEL_APP,// 微信 APP 支付
         Config::WX_CHANNEL_PUB,// 微信公众号支付
         Config::WX_CHANNEL_QR,// 微信公众号扫码支付
         Config::WX_CHANNEL_BAR,// 微信刷卡支付
         Config::WX_CHANNEL_WAP,// 微信 WAP 支付（此渠道仅针对特定客户开放）
         Config::WX_CHANNEL_LITE,// 微信小程序支付
-
+        // 招行一网通
         Config::CMB_CHANNEL_APP,// 招行一网通
-        'applepay_upacp',// Apple Pay
     ];
 
     /**
@@ -41,11 +42,18 @@ class Charge
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $channel
+     * @param $config
+     * @return ChargeContext
+     * @throws PayException
+     */
     protected static function getInstance($channel, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
         mb_internal_encoding("UTF-8");
-        
+
         if (is_null(self::$instance)) {
             static::$instance = new ChargeContext();
         }
@@ -60,6 +68,7 @@ class Charge
     }
 
     /**
+     * 执行异步工作
      * @param string $channel
      * @param array $config
      * @param array $metadata
@@ -69,7 +78,7 @@ class Charge
      */
     public static function run($channel, $config, $metadata)
     {
-        if (! in_array($channel, self::$supportChannel)) {
+        if (!in_array($channel, self::$supportChannel)) {
             throw new PayException('sdk当前不支持该支付渠道，当前仅支持：' . implode(',', self::$supportChannel));
         }
 

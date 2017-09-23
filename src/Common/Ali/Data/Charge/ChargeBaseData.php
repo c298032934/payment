@@ -1,10 +1,10 @@
 <?php
+
 namespace Payment\Common\Ali\Data\Charge;
 
 use Payment\Common\Ali\Data\AliBaseData;
 use Payment\Common\PayException;
 use Payment\Config;
-use Payment\Utils\ArrayUtil;
 
 /**
  * @author: helei
@@ -24,7 +24,7 @@ use Payment\Utils\ArrayUtil;
  * @property string $amount
  * @property string $goods_type
  * @property string $return_param
- * @property string $store_id  	商户门店编号
+ * @property string $store_id    商户门店编号
  *
  * @package Payment\Common\Ali\Data\Charge
  * anthor helei
@@ -46,6 +46,7 @@ abstract class ChargeBaseData extends AliBaseData
         $amount = $this->amount;
         $goodsType = $this->goods_type;
         $passBack = $this->return_param;
+        $notifyUrl = $this->notifyUrl;
 
         // 检查 商品名称 与 商品描述
         if (empty($subject)) {
@@ -65,16 +66,21 @@ abstract class ChargeBaseData extends AliBaseData
         // 检查商品类型
         if (empty($goodsType)) {// 默认为实物类商品
             $this->goods_type = 1;
-        } elseif (! in_array($goodsType, [0 ,1])) {
+        } elseif (!in_array($goodsType, [0, 1])) {
             throw new PayException('商品类型可取值为：0-虚拟类商品  1-实物类商品');
         }
 
         // 返回参数进行urlencode编码
-        if (! empty($passBack) && ! is_string($passBack)) {
+        if (!empty($passBack) && !is_string($passBack)) {
             throw new PayException('回传参数必须是字符串');
         }
         if (!empty($passBack)) {
             $this->return_param = urlencode($passBack);
+        }
+
+        // 检查回调地址
+        if (empty($notifyUrl)) {
+            throw new PayException('异步通知的url必须提供.');
         }
     }
 }

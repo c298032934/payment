@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Query\Ali;
 
 use Payment\Common\Ali\AliBaseStrategy;
@@ -18,12 +19,22 @@ class AliRefundQuery extends AliBaseStrategy
 {
     protected $method = 'alipay.trade.fastpay.refund.query';
 
+    /**
+     * 获取支付对应的数据完成类
+     * @return string
+     */
     public function getBuildDataClass()
     {
         $this->config->method = $this->method;
         return RefundQueryData::class;
     }
 
+    /**
+     * 处理支付宝的返回值并返回给客户端
+     * @param array $data
+     * @return array|string
+     * @throws PayException
+     */
     protected function retData(array $data)
     {
         $reqData = parent::retData($data);
@@ -52,32 +63,24 @@ class AliRefundQuery extends AliBaseStrategy
     protected function createBackData(array $data)
     {
         if ($data['code'] !== '10000') {
-            return $retData = [
-                'is_success'    => 'F',
-                'error' => $data['sub_msg'],
-                'channel'   => Config::ALI_REFUND,
-            ];
+            return ['is_success' => 'F', 'error' => $data['sub_msg'], 'channel' => Config::ALI_REFUND];
         }
 
         // 这里有个诡异情况。查询数据全部为空。仅返回一个成功的标记
         if (empty($data['out_trade_no'])) {
-            return [
-                'is_success'    => 'T',
-                'msg'   => strtolower($data['msg']),
-                'channel'   => Config::ALI_REFUND,
-            ];
+            return ['is_success' => 'T', 'msg' => strtolower($data['msg']), 'channel' => Config::ALI_REFUND];
         }
 
         $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'transaction_id'   => ArrayUtil::get($data, 'trade_no'),// 支付宝订单号
-                'order_no'   => ArrayUtil::get($data, 'out_trade_no'),// 商户订单号
+            'is_success' => 'T',
+            'response' => [
+                'transaction_id' => ArrayUtil::get($data, 'trade_no'),// 支付宝订单号
+                'order_no' => ArrayUtil::get($data, 'out_trade_no'),// 商户订单号
                 'refund_no' => ArrayUtil::get($data, 'out_request_no'),// 本笔退款对应的退款请求号
-                'reason'   => ArrayUtil::get($data, 'refund_reason'),// 退款理由
-                'amount'   => ArrayUtil::get($data, 'total_amount'),// 订单总金额
-                'refund_amount'   => ArrayUtil::get($data, 'refund_amount'),// 退款金额
-                'channel'   => Config::ALI_REFUND,
+                'reason' => ArrayUtil::get($data, 'refund_reason'),// 退款理由
+                'amount' => ArrayUtil::get($data, 'total_amount'),// 订单总金额
+                'refund_amount' => ArrayUtil::get($data, 'refund_amount'),// 退款金额
+                'channel' => Config::ALI_REFUND,
             ]
         ];
 

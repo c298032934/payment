@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Ali\Data\Query;
 
 use Payment\Common\Ali\Data\AliBaseData;
@@ -15,17 +16,24 @@ use Payment\Common\PayException;
  */
 class TransferQueryData extends AliBaseData
 {
-
+    /**
+     * 支付宝构建请求查询的数据
+     * @return mixed
+     */
     protected function getBizContent()
     {
         $content = [
-            'out_biz_no'    => $this->trans_no,
-            'order_id'        => $this->transaction_id,
+            'out_biz_no' => $this->trans_no,
+            'order_id' => $this->transaction_id,
         ];
 
         return $content;
     }
 
+    /**
+     * 检查传入的参数. $reqData是否正确.
+     * @throws PayException
+     */
     protected function checkDataParam()
     {
         $transNo = $this->trans_no;

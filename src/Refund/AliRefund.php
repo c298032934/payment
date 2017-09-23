@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Refund;
 
 use Payment\Common\Ali\AliBaseStrategy;
@@ -51,26 +52,22 @@ class AliRefund extends AliBaseStrategy
         }
 
         if ($ret['code'] !== '10000') {
-            return [
-                'is_success'    => 'F',
-                'error' => $ret['sub_msg'],
-                'refund_no' => $refundNo
-            ];
+            return ['is_success' => 'F', 'error' => $ret['sub_msg'], 'refund_no' => $refundNo];
         }
 
         $retData = [
-            'is_success'    => 'T',
-            'response'  => [
-                'transaction_id'   => $ret['trade_no'],
-                'order_no'  => $ret['out_trade_no'],
-                'logon_id'   => $ret['buyer_logon_id'],
+            'is_success' => 'T',
+            'response' => [
+                'transaction_id' => $ret['trade_no'],
+                'order_no' => $ret['out_trade_no'],
+                'logon_id' => $ret['buyer_logon_id'],
                 'fund_change' => $ret['fund_change'],// 本次退款是否发生了资金变化
-                'refund_fee'    => $ret['refund_fee'],// 返回的总金额，这里支付宝会累计
+                'refund_fee' => $ret['refund_fee'],// 返回的总金额，这里支付宝会累计
                 'refund_time' => $ret['gmt_refund_pay'],
                 'refund_detail_item_list' => ArrayUtil::get($ret, 'refund_detail_item_list'),// 退款使用的资金渠道
                 'refund_no' => $refundNo,
-                'channel'   => Config::ALI_REFUND,
-                'buyer_id'   => $ret['buyer_user_id'],
+                'channel' => Config::ALI_REFUND,
+                'buyer_id' => $ret['buyer_user_id'],
                 'store_name' => ArrayUtil::get($ret, 'store_name'),
             ],
         ];

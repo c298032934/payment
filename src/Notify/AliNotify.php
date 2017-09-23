@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Notify;
 
 use Payment\Common\Ali\AliConfig;
@@ -43,7 +44,7 @@ class AliNotify extends NotifyStrategy
     public function getNotifyData()
     {
         $data = empty($_POST) ? $_GET : $_POST;
-        if (empty($data) || ! is_array($data)) {
+        if (empty($data) || !is_array($data)) {
             return false;
         }
 
@@ -55,7 +56,7 @@ class AliNotify extends NotifyStrategy
      *
      * 如果检查失败，返回false
      *
-     * @param array $data  由 $this->getNotifyData() 返回的数据
+     * @param array $data 由 $this->getNotifyData() 返回的数据
      * @return boolean
      * @author helei
      */
@@ -87,43 +88,43 @@ class AliNotify extends NotifyStrategy
         }
 
         $retData = [
-            'notify_time'   => ArrayUtil::get($data, 'notify_time'),
+            'notify_time' => ArrayUtil::get($data, 'notify_time'),
             'notify_type' => ArrayUtil::get($data, 'notify_type'),
             'notify_id' => ArrayUtil::get($data, 'notify_id'),
             'app_id' => ArrayUtil::get($data, 'app_id'),
-            'transaction_id'   => ArrayUtil::get($data, 'trade_no'),
-            'order_no'   => ArrayUtil::get($data, 'out_trade_no'),
+            'transaction_id' => ArrayUtil::get($data, 'trade_no'),
+            'order_no' => ArrayUtil::get($data, 'out_trade_no'),
             'out_biz_no' => ArrayUtil::get($data, 'out_biz_no'),
-            'buyer_id'   => ArrayUtil::get($data, 'buyer_id'),
+            'buyer_id' => ArrayUtil::get($data, 'buyer_id'),
             'buyer_account' => ArrayUtil::get($data, 'buyer_logon_id'),
             'seller_id' => ArrayUtil::get($data, 'seller_id'),
             'seller_email' => ArrayUtil::get($data, 'seller_email'),
-            'trade_state'   => $this->getTradeStatus($data['trade_status']),
-            'amount'   => ArrayUtil::get($data, 'total_amount'),
+            'trade_state' => $this->getTradeStatus($data['trade_status']),
+            'amount' => ArrayUtil::get($data, 'total_amount'),
             'receipt_amount' => ArrayUtil::get($data, 'receipt_amount'),// 商家在交易中实际收到的款项，单位为元
             'invoice_amount' => ArrayUtil::get($data, 'invoice_amount'),// 用户在交易中支付的可开发票的金额
             'pay_amount' => ArrayUtil::get($data, 'buyer_pay_amount'),// 用户在交易中支付的金额
             'point_amount' => ArrayUtil::get($data, 'point_amount'),// 使用集分宝支付的金额
             'refund_fee' => ArrayUtil::get($data, 'refund_fee'), // 总退款金额
-            'subject'   => ArrayUtil::get($data, 'subject'),
-            'body'   => ArrayUtil::get($data, 'body'),
+            'subject' => ArrayUtil::get($data, 'subject'),
+            'body' => ArrayUtil::get($data, 'body'),
             'trade_create_time' => ArrayUtil::get($data, 'gmt_create'),// 交易创建时间
-            'pay_time'   => ArrayUtil::get($data, 'gmt_payment'),// 交易付款时间
+            'pay_time' => ArrayUtil::get($data, 'gmt_payment'),// 交易付款时间
             'trade_refund_time' => ArrayUtil::get($data, 'gmt_refund'), // 交易退款时间
             'trade_close_time' => ArrayUtil::get($data, 'gmt_close'), // 交易关闭时间
-            'channel'   => Config::ALI_CHARGE,
+            'channel' => Config::ALI_CHARGE,
         ];
 
         // 检查是否存在用户自定义参数
-        if (isset($data['passback_params']) && ! empty($data['passback_params'])) {
+        if (isset($data['passback_params']) && !empty($data['passback_params'])) {
             $retData['return_param'] = $data['passback_params'];
         }
         // 支付成功的各个渠道金额信息
-        if (isset($data['fund_bill_list']) && ! empty($data['fund_bill_list'])) {
+        if (isset($data['fund_bill_list']) && !empty($data['fund_bill_list'])) {
             $retData['fund_bill_list'] = \GuzzleHttp\json_decode($data['fund_bill_list'], true);
         }
         // 优惠券信息
-        if (isset($data['voucher_detail_list']) && ! empty($data['voucher_detail_list'])) {
+        if (isset($data['voucher_detail_list']) && !empty($data['voucher_detail_list'])) {
             $retData['voucher_detail_list'] = \GuzzleHttp\json_decode($data['voucher_detail_list'], true);
         }
 

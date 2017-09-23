@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Notify;
 
 use Payment\Common\ConfigInterface;
@@ -84,7 +85,7 @@ abstract class NotifyStrategy
      *
      * 如果检查失败，返回false
      *
-     * @param array $data  由 $this->getNotifyData() 返回的数据
+     * @param array $data 由 $this->getNotifyData() 返回的数据
      * @return boolean
      * @author helei
      */

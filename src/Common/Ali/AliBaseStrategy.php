@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Common\Ali;
 
 use GuzzleHttp\Client;
@@ -105,22 +106,13 @@ abstract class AliBaseStrategy implements BaseStrategy
      */
     protected function sendReq(array $data, $method = 'GET')
     {
-        $client = new Client([
-            'base_uri' => $this->config->getewayUrl,
-            'timeout' => '10.0'
-        ]);
+        $client = new Client(['base_uri' => $this->config->getewayUrl, 'timeout' => '10.0']);
         $method = strtoupper($method);
         $options = [];
         if ($method === 'GET') {
-            $options = [
-                'query' => $data,
-                'http_errors' => false
-            ];
+            $options = ['query' => $data, 'http_errors' => false];
         } elseif ($method === 'POST') {
-            $options = [
-                'form_params' => $data,
-                'http_errors' => false
-            ];
+            $options = ['form_params' => $data, 'http_errors' => false];
         }
         // 发起网络请求
         $response = $client->request($method, '', $options);
@@ -137,13 +129,13 @@ abstract class AliBaseStrategy implements BaseStrategy
         }
 
         $responseKey = str_ireplace('.', '_', $this->config->method) . '_response';
-        if (! isset($body[$responseKey])) {
+        if (!isset($body[$responseKey])) {
             throw new PayException('支付宝系统故障或非法请求');
         }
 
         // 验证签名，检查支付宝返回的数据
         $flag = $this->verifySign($body[$responseKey], $body['sign']);
-        if (! $flag) {
+        if (!$flag) {
             throw new PayException('支付宝返回数据被篡改。请检查网络是否安全！');
         }
 
@@ -154,7 +146,7 @@ abstract class AliBaseStrategy implements BaseStrategy
     /**
      * 检查支付宝数据 签名是否被篡改
      * @param array $data
-     * @param string $sign  支付宝返回的签名结果
+     * @param string $sign 支付宝返回的签名结果
      * @return bool
      * @author helei
      */
