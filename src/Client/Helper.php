@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\Common\PayException;
@@ -28,6 +29,13 @@ class Helper
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $channel
+     * @param $config
+     * @return HelperContext
+     * @throws PayException
+     */
     protected static function getInstance($channel, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
@@ -47,6 +55,7 @@ class Helper
     }
 
     /**
+     * 执行异步工作
      * @param string $channel
      * @param array $config
      * @param array $metadata
@@ -56,7 +65,7 @@ class Helper
      */
     public static function run($channel, $config, array $metadata = [])
     {
-        if (! in_array($channel, self::$supportChannel)) {
+        if (!in_array($channel, self::$supportChannel)) {
             throw new PayException('sdk当前不支持该渠道，当前仅支持：' . implode(',', self::$supportChannel));
         }
 

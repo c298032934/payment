@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\Common\PayException;
@@ -19,12 +20,12 @@ use Payment\NotifyContext;
 class Notify
 {
     private static $supportChannel = [
-        Config::ALI_CHARGE,// 支付宝
-
-        Config::WX_CHARGE,// 微信
-
-        Config::CMB_CHARGE,// 招行一网通
-        'applepay_upacp',// Apple Pay
+        // 支付宝
+        Config::ALI_CHARGE,
+        // 微信
+        Config::WX_CHARGE,
+        // 招行一网通
+        Config::CMB_CHARGE,
     ];
 
     /**
@@ -33,6 +34,13 @@ class Notify
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $type
+     * @param $config
+     * @return NotifyContext
+     * @throws PayException
+     */
     protected static function getInstance($type, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
@@ -61,7 +69,7 @@ class Notify
      */
     public static function run($type, $config, $callback)
     {
-        if (! in_array($type, self::$supportChannel)) {
+        if (!in_array($type, self::$supportChannel)) {
             throw new PayException('sdk当前不支持该异步方式，当前仅支持：' . implode(',', self::$supportChannel));
         }
 

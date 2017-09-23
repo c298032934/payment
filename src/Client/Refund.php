@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\Common\PayException;
@@ -18,13 +19,12 @@ use Payment\RefundContext;
 class Refund
 {
     private static $supportChannel = [
-        Config::ALI_REFUND,// 支付宝
-
-        Config::WX_REFUND,// 微信
-
-        Config::CMB_REFUND,// 招行一网通
-
-        'applepay_upacp',// Apple Pay
+        // 支付宝
+        Config::ALI_REFUND,
+        // 微信
+        Config::WX_REFUND,
+        // 招行一网通
+        Config::CMB_REFUND,
     ];
 
     /**
@@ -33,6 +33,13 @@ class Refund
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $channel
+     * @param $config
+     * @return RefundContext
+     * @throws PayException
+     */
     protected static function getInstance($channel, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
@@ -51,9 +58,17 @@ class Refund
         return static::$instance;
     }
 
+    /**
+     * 执行异步工作
+     * @param $channel
+     * @param $config
+     * @param $refundData
+     * @return array
+     * @throws PayException
+     */
     public static function run($channel, $config, $refundData)
     {
-        if (! in_array($channel, self::$supportChannel)) {
+        if (!in_array($channel, self::$supportChannel)) {
             throw new PayException('sdk当前不支持该退款渠道，当前仅支持：' . implode(',', self::$supportChannel));
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\Common\PayException;
@@ -18,16 +19,17 @@ use Payment\QueryContext;
 class Query
 {
     protected static $supportType = [
+        // 支付宝
         Config::ALI_CHARGE,
         Config::ALI_REFUND,
         Config::ALI_TRANSFER,
         Config::ALI_RED,
-
+        // 微信
         Config::WX_CHARGE,
         Config::WX_REFUND,
         Config::WX_RED,
         Config::WX_TRANSFER,
-
+        // 招行一网通
         Config::CMB_CHARGE,
         Config::CMB_REFUND,
     ];
@@ -38,6 +40,13 @@ class Query
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $queryType
+     * @param $config
+     * @return QueryContext
+     * @throws PayException
+     */
     protected static function getInstance($queryType, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
@@ -57,6 +66,7 @@ class Query
     }
 
     /**
+     * 执行异步工作
      * @param string $queryType
      * @param array $config
      * @param array $metadata
@@ -65,7 +75,7 @@ class Query
      */
     public static function run($queryType, $config, $metadata)
     {
-        if (! in_array($queryType, self::$supportType)) {
+        if (!in_array($queryType, self::$supportType)) {
             throw new PayException('sdk当前不支持该类型查询，当前仅支持：' . implode(',', self::$supportType) . __LINE__);
         }
 

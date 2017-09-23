@@ -28,6 +28,10 @@ abstract class ConfigInterface
     // 微信： 默认使用MD5
     public $signType = 'RSA';
 
+    /**
+     * 转换为数组
+     * @return array
+     */
     public function toArray()
     {
         return get_object_vars($this);

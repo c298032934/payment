@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Client;
 
 use Payment\Common\PayException;
@@ -22,9 +23,6 @@ class Transfer
         Config::ALI_TRANSFER,// 支付宝
 
         Config::WX_TRANSFER,// 微信
-
-        'cmb_wallet',// 招行一网通
-        'applepay_upacp',// Apple Pay
     ];
 
     /**
@@ -33,6 +31,13 @@ class Transfer
      */
     protected static $instance;
 
+    /**
+     * 实例化对象
+     * @param $channel
+     * @param $config
+     * @return TransferContext
+     * @throws PayException
+     */
     protected static function getInstance($channel, $config)
     {
         /* 设置内部字符编码为 UTF-8 */
@@ -52,6 +57,7 @@ class Transfer
     }
 
     /**
+     * 执行异步工作
      * @param $channel
      * @param $config
      * @param $metadata
@@ -61,7 +67,7 @@ class Transfer
      */
     public static function run($channel, $config, $metadata)
     {
-        if (! in_array($channel, self::$supportChannel)) {
+        if (!in_array($channel, self::$supportChannel)) {
             throw new PayException('sdk当前不支持该退款渠道，当前仅支持：' . implode(',', self::$supportChannel));
         }
 
