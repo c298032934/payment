@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Utils;
 
 /**
@@ -24,12 +25,12 @@ class DataParser
         $xml = "<xml>";
         foreach ($values as $key => $val) {
             if (is_numeric($val)) {
-                $xml.="<".$key.">".$val."</".$key.">";
+                $xml .= "<" . $key . ">" . $val . "</" . $key . ">";
             } else {
-                $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+                $xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
             }
         }
-        $xml.="</xml>";
+        $xml .= "</xml>";
         return $xml;
     }
 

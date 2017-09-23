@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Utils;
 
 /**
@@ -12,6 +13,10 @@ class Rsa2Encrypt
 {
     protected $key;
 
+    /**
+     * 构造方法
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->key = $key;

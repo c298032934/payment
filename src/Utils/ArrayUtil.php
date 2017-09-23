@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Utils;
 
 /**
@@ -19,11 +20,11 @@ class ArrayUtil
     public static function paraFilter($para)
     {
         $paraFilter = [];
-        while (list($key, $val) = each($para)) {
+        foreach ($para as $key => $val) {
             if ($val === '' || $val === null) {
                 continue;
             } else {
-                if (! is_array($para[$key])) {
+                if (!is_array($para[$key])) {
                     $para[$key] = is_bool($para[$key]) ? $para[$key] : trim($para[$key]);
                 }
 
@@ -42,11 +43,11 @@ class ArrayUtil
      */
     public static function removeKeys(array $inputs, $keys)
     {
-        if (! is_array($keys)) {// 如果不是数组，需要进行转换
+        if (!is_array($keys)) {// 如果不是数组，需要进行转换
             $keys = explode(',', $keys);
         }
 
-        if (empty($keys) || ! is_array($keys)) {
+        if (empty($keys) || !is_array($keys)) {
             return $inputs;
         }
 
@@ -60,7 +61,7 @@ class ArrayUtil
             }
         }
 
-        if (! $flag) {
+        if (!$flag) {
             $inputs = array_values($inputs);
         }
         return $inputs;
@@ -88,18 +89,17 @@ class ArrayUtil
      */
     public static function createLinkstring($para)
     {
-        if (! is_array($para)) {
+        if (!is_array($para)) {
             throw new \Exception('必须传入数组参数');
         }
 
         reset($para);
         $arg = '';
-        while (list($key, $val) = each($para)) {
+        foreach ($para as $key => $val) {
             if (is_array($val)) {
                 continue;
             }
-
-            $arg.=$key.'='.urldecode($val).'&';
+            $arg .= $key . '=' . urldecode($val) . '&';
         }
         //去掉最后一个&字符
         $arg && $arg = substr($arg, 0, -1);
@@ -122,10 +122,59 @@ class ArrayUtil
      */
     public static function get(array $arr, $key, $default = '')
     {
-        if (isset($arr[$key]) && ! empty($arr[$key])) {
+        if (isset($arr[$key]) && !empty($arr[$key])) {
             return $arr[$key];
         }
 
         return $default;
+    }
+
+    /**
+     * 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+     * @param array $para 需要拼接的数组
+     * @param bool $encode
+     * @return string
+     * @throws \Exception
+     */
+    public static function createLinkstringEncode($para, $encode = false)
+    {
+        if (!is_array($para)) {
+            throw new \Exception('必须传入数组参数');
+        }
+
+        reset($para);
+        $arg = '';
+        foreach ($para as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+            $encode AND $val = urlencode($val);
+            $arg .= $key . '=' . $val . '&';
+        }
+        //去掉最后一个&字符
+        $arg && $arg = substr($arg, 0, -1);
+
+        //如果存在转义字符，那么去掉转义
+        if (get_magic_quotes_gpc()) {
+            $arg = stripslashes($arg);
+        }
+
+        return $arg;
+    }
+
+    /**
+     * key1=value1&key2=value2转array
+     * @param $str
+     * @return array
+     */
+    public static function parseString($str)
+    {
+        $arr = explode('&', $str);
+        $result = [];
+        foreach ($arr as $k => $v) {
+            $a = explode('=', $v, 2);
+            $result[$a[0]] = $a[1];
+        }
+        return $result;
     }
 }

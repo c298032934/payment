@@ -1,4 +1,5 @@
 <?php
+
 namespace Payment\Utils;
 
 /**
@@ -12,6 +13,10 @@ class RsaEncrypt
 {
     protected $key;
 
+    /**
+     * 构造方法
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->key = $key;
@@ -74,8 +79,8 @@ class RsaEncrypt
         //用base64将内容还原成二进制
         $content = base64_decode($content);
         //把需要解密的内容，按128位拆开解密
-        $result  = '';
-        for ($i = 0; $i < strlen($content)/128; $i++) {
+        $result = '';
+        for ($i = 0; $i < strlen($content) / 128; $i++) {
             $data = substr($content, $i * 128, 128);
             openssl_private_decrypt($data, $decrypt, $res);
             $result .= $decrypt;
